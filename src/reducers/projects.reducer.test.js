@@ -1,6 +1,6 @@
 import {
   IMPORT_EXISTING_PROJECT_FINISH,
-  ADD_DEPENDENCY_FINISH,
+  INSTALL_DEPENDENCIES_FINISH,
   REFRESH_PROJECTS_FINISH,
   SELECT_PROJECT,
   ADD_PROJECT,
@@ -71,21 +71,23 @@ describe('Projects Reducer', () => {
     });
   });
 
-  describe(ADD_DEPENDENCY_FINISH, () => {
+  describe(INSTALL_DEPENDENCIES_FINISH, () => {
     it('adds dependency to project dependencies', () => {
       const action = {
-        type: ADD_DEPENDENCY_FINISH,
+        type: INSTALL_DEPENDENCIES_FINISH,
         projectId: 'foo',
-        dependency: {
-          description: 'Package',
-          homepage: 'http://example.com/',
-          keywords: [],
-          license: 'MIT',
-          name: 'package',
-          repository: {},
-          status: 'idle',
-          version: '4.0.0',
-        },
+        dependencies: [
+          {
+            description: 'Package',
+            homepage: 'http://example.com/',
+            keywords: [],
+            license: 'MIT',
+            name: 'package',
+            repository: {},
+            status: 'idle',
+            version: '4.0.0',
+          },
+        ],
       };
 
       const initialState = {
@@ -111,7 +113,7 @@ describe('Projects Reducer', () => {
           foo: {
             ...initialState.byId.foo,
             dependencies: {
-              [action.dependency.name]: action.dependency.version,
+              [action.dependencies[0].name]: action.dependencies[0].version,
             },
           },
         },
